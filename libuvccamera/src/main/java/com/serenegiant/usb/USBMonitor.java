@@ -165,7 +165,7 @@ public final class USBMonitor {
      */
     public void destroy() {
         if (DEBUG) Log.i(TAG, "destroy:");
-        unregister();
+
         if (!mDestroyed) {
             mDestroyed = true;
 

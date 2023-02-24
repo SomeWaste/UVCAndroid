@@ -158,23 +158,10 @@ class CameraConnectionService {
         @Override
         public void register(final ICameraHelper.StateCallback callback) {
             mWeakStateCallback = new WeakReference<>(callback);
-
-            if (mUSBMonitor != null) {
-                if (DEBUG) Log.d(TAG, "mUSBMonitor#register:");
-                final List<DeviceFilter> filters = DeviceFilter.getDeviceFilters(UVCUtils.getApplication(), R.xml.device_filter);
-                mUSBMonitor.setDeviceFilter(filters);
-                mUSBMonitor.register();
-            }
         }
 
         @Override
         public void unregister(final ICameraHelper.StateCallback callback) {
-            if (mUSBMonitor != null) {
-                if (DEBUG) Log.d(TAG, "mUSBMonitor#unregister:");
-                mUSBMonitor.unregister();
-                mUSBMonitor = null;
-            }
-
             mWeakStateCallback.clear();
         }
 
