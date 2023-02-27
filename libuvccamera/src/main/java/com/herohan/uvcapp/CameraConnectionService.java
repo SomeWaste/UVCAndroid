@@ -56,7 +56,7 @@ class CameraConnectionService {
         private USBMonitor mUSBMonitor;
         private HandlerThread mListenerHandlerThread;
         private Handler mListenerHandler;
-        private WeakReference<ICameraHelper.StateCallback> mWeakStateCallback;
+        private WeakReference<ICameraHelper.StateCallback> mWeakStateCallback = new WeakReference<>(null);
 
         CameraConnection() {
             mListenerHandlerThread = new HandlerThread(LOG_PREFIX + hashCode());
