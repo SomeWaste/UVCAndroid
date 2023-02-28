@@ -501,12 +501,12 @@ public final class USBMonitor {
     public void requestPermission(final UsbDevice device) {
         if (DEBUG) Log.v(TAG, "requestPermission:device=" + device.getDeviceName());
         synchronized (USBMonitor.class) {
-            if (isRegistered()) {
-                if (device != null) {
+            if (device != null) {
+                if (!mDestroyed) {
                     if (mUsbManager.hasPermission(device)) {
                         // call onConnect if app already has permission
                         processOpenDevice(device);
-                    } else {
+                    } else if (mPermissionIntent != null) {
                         try {
                             // if no usb permission, request permission
                             mUsbManager.requestPermission(device, mPermissionIntent);
@@ -515,12 +515,12 @@ public final class USBMonitor {
                             Log.w(TAG, e);
                             processCancel(device);
                         }
+                    } else {
+                        processCancel(device);
                     }
                 } else {
                     processCancel(device);
                 }
-            } else {
-                processCancel(device);
             }
         }
     }
