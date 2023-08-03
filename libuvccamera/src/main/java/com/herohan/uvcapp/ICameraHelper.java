@@ -52,6 +52,13 @@ public interface ICameraHelper {
     void takePicture(ImageCapture.OutputFileOptions options,
                      ImageCapture.OnImageCaptureCallback callback);
 
+    /**
+     * In case taking picture is in progress, stop it.
+     * If it is not in progress, or picture was already taken,
+     * this function will do nothing.
+     */
+    void stopTakingPicture();
+
     boolean isRecording();
 
     void startRecording(VideoCapture.OutputFileOptions options,

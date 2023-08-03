@@ -49,6 +49,8 @@ interface ICameraInternal {
     void takePicture(ImageCapture.OutputFileOptions options,
                      ImageCapture.OnImageCaptureCallback callback);
 
+    void stopTakingPicture();
+
     boolean isRecording();
 
     void startRecording(VideoCapture.OutputFileOptions options,

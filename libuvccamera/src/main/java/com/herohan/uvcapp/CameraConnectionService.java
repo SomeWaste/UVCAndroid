@@ -375,6 +375,14 @@ class CameraConnectionService {
         }
 
         @Override
+        public void stopTakingPicture(UsbDevice device) {
+            final CameraInternal cameraInternal = getCamera(device);
+            if (cameraInternal != null) {
+                cameraInternal.stopTakingPicture();
+            }
+        }
+
+        @Override
         public boolean isRecording(final UsbDevice device) {
             final CameraInternal cameraInternal = getCamera(device, false);
             return cameraInternal != null && cameraInternal.isRecording();

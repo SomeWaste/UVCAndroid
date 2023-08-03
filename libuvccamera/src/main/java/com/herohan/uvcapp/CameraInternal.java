@@ -35,6 +35,7 @@ final class CameraInternal implements ICameraInternal {
     private int mFrameHeight = DEFAULT_HEIGHT;
 
     private final Object mSync = new Object();
+    private final Object mImageCaptureLock = new Object();
 
     private final WeakReference<Context> mWeakContext;
     private final UsbControlBlock mCtrlBlock;
@@ -48,6 +49,8 @@ final class CameraInternal implements ICameraInternal {
     private volatile UVCCamera mUVCCamera;
 
     private final List<StateCallback> mCallbacks = new ArrayList<>();
+
+    private ImageCaptureConfig mImageCaptureConfig;
 
     private ImageCapture mImageCapture;
     private VideoCapture mVideoCapture;
@@ -235,7 +238,9 @@ final class CameraInternal implements ICameraInternal {
 
             setPreviewConfig(previewConfig);
 
-            mImageCapture = new ImageCapture(mRendererHolder, imageCaptureConfig);
+            mImageCaptureConfig = imageCaptureConfig;
+
+            mImageCapture = new ImageCapture(mRendererHolder, mImageCaptureConfig);
             mVideoCapture = new VideoCapture(mRendererHolder, videoCaptureConfig, getPreviewSize());
 
             processOnCameraOpen();
@@ -264,9 +269,11 @@ final class CameraInternal implements ICameraInternal {
             mSync.notifyAll();
         }
 
-        if (mImageCapture != null) {
-            mImageCapture.release();
-            mImageCapture = null;
+        synchronized (mImageCaptureLock) {
+            if (mImageCapture != null) {
+                mImageCapture.release();
+                mImageCapture = null;
+            }
         }
         if (mVideoCapture != null) {
             mVideoCapture.release();
@@ -324,11 +331,23 @@ final class CameraInternal implements ICameraInternal {
      */
     @Override
     public void takePicture(ImageCapture.OutputFileOptions options, ImageCapture.OnImageCaptureCallback callback) {
-        if (isCameraOpened() && mImageCapture != null) {
-            mImageCapture.takePicture(options, callback);
-        } else {
-            String message = "Not bound to a Camera";
-            callback.onError(ImageCapture.ERROR_INVALID_CAMERA, message, new IllegalStateException(message));
+        synchronized (mImageCaptureLock) {
+            if (isCameraOpened() && mImageCapture != null) {
+                mImageCapture.takePicture(options, callback);
+            } else {
+                String message = "Not bound to a Camera";
+                callback.onError(ImageCapture.ERROR_INVALID_CAMERA, message, new IllegalStateException(message));
+            }
+        }
+    }
+
+    @Override
+    public void stopTakingPicture() {
+        synchronized (mImageCaptureLock) {
+            if (mImageCapture != null) {
+                mImageCapture.release();
+                mImageCapture = new ImageCapture(mRendererHolder, mImageCaptureConfig);
+            }
         }
     }
 
@@ -389,8 +408,10 @@ final class CameraInternal implements ICameraInternal {
     public void setImageCaptureConfig(ImageCaptureConfig config) {
         if (DEBUG) Log.d(TAG, "setImageCaptureConfig:");
 
-        if (mImageCapture != null) {
-            mImageCapture.setConfig(config);
+        synchronized (mImageCaptureLock) {
+            if (mImageCapture != null) {
+                mImageCapture.setConfig(config);
+            }
         }
     }
 

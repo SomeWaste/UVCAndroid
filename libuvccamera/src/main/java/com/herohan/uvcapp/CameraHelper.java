@@ -338,6 +338,11 @@ public class CameraHelper implements ICameraHelper {
     }
 
     @Override
+    public void stopTakingPicture() {
+        mService.stopTakingPicture(mUsbDevice);
+    }
+
+    @Override
     public boolean isRecording() {
         if (DEBUG) Log.d(TAG, "isRecording:");
         if (mService != null && mUsbDevice != null) {
