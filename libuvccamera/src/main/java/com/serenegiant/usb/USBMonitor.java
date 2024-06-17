@@ -201,6 +201,7 @@ public final class USBMonitor {
      *
      * @throws IllegalStateException
      */
+    @SuppressLint({"WrongConstant", "NewApi"})
     public synchronized void register() throws IllegalStateException {
         if (mDestroyed) throw new IllegalStateException("already destroyed");
         if (mPermissionIntent == null) {
@@ -213,11 +214,11 @@ public final class USBMonitor {
                     // Starting with Build.VERSION_CODES.S, it will be required to explicitly specify the mutability of PendingIntents on creation with either (@link #FLAG_IMMUTABLE} or FLAG_MUTABLE.
                     flags = PendingIntent.FLAG_MUTABLE;
                 }
-                mPermissionIntent = PendingIntent.getBroadcast(context, 0, new Intent(ACTION_USB_PERMISSION), flags);
+                mPermissionIntent = PendingIntent.getBroadcast(context, 0, new Intent(ACTION_USB_PERMISSION).setPackage(context.getPackageName()), flags);
                 final IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
                 // ACTION_USB_DEVICE_ATTACHED never comes on some devices so it should not be added here
                 filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
-                context.registerReceiver(mUsbReceiver, filter);
+                context.registerReceiver(mUsbReceiver, filter,4);
             }
             // start connection check
             mDetectedDeviceKeys.clear();
