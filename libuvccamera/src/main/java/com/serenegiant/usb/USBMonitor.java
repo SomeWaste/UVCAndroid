@@ -66,7 +66,6 @@ public final class USBMonitor {
     private static final int CHECK_DEVICE_RUNNABLE_DELAY = 150;
 
     private static final String ACTION_USB_PERMISSION_BASE = "com.serenegiant.USB_PERMISSION.";
-    private static final Integer RECEIVER_NOT_EXPORTED = 4;
     private final String ACTION_USB_PERMISSION = ACTION_USB_PERMISSION_BASE + hashCode();
 
     public static final String ACTION_USB_DEVICE_ATTACHED = "android.hardware.usb.action.USB_DEVICE_ATTACHED";
@@ -220,7 +219,7 @@ public final class USBMonitor {
                 final IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
                 // ACTION_USB_DEVICE_ATTACHED never comes on some devices so it should not be added here
                 filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
-                context.registerReceiver(mUsbReceiver, filter,RECEIVER_NOT_EXPORTED);
+                ContextCompat.registerReceiver(context, mUsbReceiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED);
             }
             // start connection check
             mDetectedDeviceKeys.clear();
