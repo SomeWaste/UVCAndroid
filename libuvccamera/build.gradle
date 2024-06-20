@@ -60,9 +60,6 @@ android {
         ndkBuild {
             path file('src/main/jni/Android.mk')
         }
-//        cmake {
-//            path "src/main/jni/CMakeLists.txt"
-//        }
     }
     namespace 'com.serenegiant.uvccamera'
 }
