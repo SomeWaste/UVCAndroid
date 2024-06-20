@@ -29,11 +29,6 @@ android {
             withSourcesJar()
             withJavadocJar()
         }
-
-        singleVariant('debug') {
-            withSourcesJar()
-            withJavadocJar()
-        }
     }
     compileOptions {
         sourceCompatibility javaSourceCompatibility
@@ -62,9 +57,6 @@ android {
         ndkBuild {
             path file('src/main/jni/Android.mk')
         }
-//        cmake {
-//            path "src/main/jni/CMakeLists.txt"
-//        }
     }
     namespace 'com.serenegiant.uvccamera'
 }
@@ -75,15 +67,12 @@ dependencies {
 }
 
 ext {
-    libraryVersion = '1.0.4'
-    publishedGroupId = 'com.herohan'
-    artifact = 'UVCAndroid'
+    libraryVersion = '1.0.4.1'
+    publishedGroupId = 'com.wasteconnections'
+    artifact = 'uvcandroid'
     libraryDescription = 'Library and sample to access UVC camera on non-rooted Android device'
-    siteUrl = 'https://github.com/shiyinghan/UVCAndroid'
-    gitUrl = 'https://github.com/shiyinghan/UVCAndroid.git'
-    developerId = 'hansy'
-    developerName = 'hansy'
-    developerEmail = '1040762057@qq.com'
+    siteUrl = 'https://github.com/SomeWaste/UVCAndroid'
+    gitUrl = 'https://github.com/SomeWaste/UVCAndroid.git'
     licenseName = 'The Apache Software License, Version 2.0'
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
 }
