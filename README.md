@@ -1,4 +1,4 @@
-[![Maven Central](https://img.shields.io/maven-central/v/com.herohan/UVCAndroid.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.herohan%22%20AND%20a:%22UVCAndroid%22)
+[![](https://jitpack.io/v/SomeWaste/UVCAndroid.svg)](https://jitpack.io/#SomeWaste/UVCAndroid)
 
 UVCAndroid
 =========
@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.herohan:UVCAndroid:1.0.7'
+    implementation 'com.github.SomeWaste:UVCAndroid:1.0.7.1'
 }
 ```
 R8 / ProGuard
