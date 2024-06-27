@@ -70,15 +70,14 @@ dependencies {
 }
 
 ext {
-    libraryVersion = '1.0.7'
-    publishedGroupId = 'com.herohan'
+    // version will be replaced by Jitpack, but for Maven Local it's better to have
+    // a SNAPSHOT version available
+    libraryVersion = 'SNAPSHOT'
+    publishedGroupId = 'com.github.SomeWaste'
     artifact = 'UVCAndroid'
     libraryDescription = 'Library and sample to access UVC camera on non-rooted Android device'
-    siteUrl = 'https://github.com/shiyinghan/UVCAndroid'
-    gitUrl = 'https://github.com/shiyinghan/UVCAndroid.git'
-    developerId = 'hansy'
-    developerName = 'hansy'
-    developerEmail = '1040762057@qq.com'
+    siteUrl = 'https://github.com/SomeWaste/UVCAndroid'
+    gitUrl = 'https://github.com/SomeWaste/UVCAndroid.git'
     licenseName = 'The Apache Software License, Version 2.0'
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
 }
