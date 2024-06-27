@@ -22,9 +22,19 @@ afterEvaluate {
                     }
                     developers {
                         developer {
-                            id = developerId
-                            name = developerName
-                            email = developerEmail
+                            id = "yankeppey"
+                            name = "Andrei Buneyeu"
+                            email = "andrei.buneyeu@toptal.com"
+                        }
+                        developer {
+                            id = "Milos Fec"
+                            name = "Milos Fec"
+                            email = "milos.fec@toptal.com"
+                        }
+                        developer {
+                            id = "CristianRobles12"
+                            name = "Cristian Robles"
+                            email = "cristian.robles@wasteconnections.com"
                         }
                     }
                 }
